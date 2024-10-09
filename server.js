@@ -8,8 +8,8 @@ const port = 3000;
 
 const getPath = (url) => {
     // 请求根路径时，发送index.html；其他路径直接拼接
-    // return url === "/" ? path.join(__dirname, '/front/index.html') : path.join(__dirname, `/front${url}`);
-    return path.join(__dirname, '/front/index.html');
+    return url === "/" ? path.join(__dirname, '/front/index.html') : path.join(__dirname, `/front${url}`);
+    // return path.join(__dirname, '/front/index.html');
 };
 
 const server = http.createServer((req, res) => {
