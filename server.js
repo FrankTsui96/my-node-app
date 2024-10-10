@@ -7,9 +7,11 @@ const hostname = '0.0.0.0';
 const port = 3000;
 
 const getPath = (url) => {
-    // 请求根路径时，发送index.html；其他路径直接拼接
-    return url === "/" ? path.join(__dirname, '/front/index.html') : path.join(__dirname, `/front${url}`);
-    // return path.join(__dirname, '/front/index.html');
+    // 请求静态资源时，路径直接拼接；否则发送index.html
+    if (/.(js|css|png|jpg|svg|json|ico|txt|map|woff|woff2|eot)$/.test(url)) {
+        return path.join(__dirname, `/front${url}`)
+    }
+    return path.join(__dirname, '/front/index.html');
 };
 
 const server = http.createServer((req, res) => {
@@ -27,7 +29,7 @@ const server = http.createServer((req, res) => {
 });
 
 const handleFileReadError = (res, err) => {
-    res.writeHead(500, { 'Content-Type': 'text/plain' });
+    res.writeHead(500, {'Content-Type': 'text/plain'});
     res.end('An error occurred while reading the file: ' + err.message);
 };
 
@@ -37,9 +39,9 @@ const getReadFileOptions = (url) => {
 
 const setResponseHeaders = (req, res) => {
     if (req.url === "/") {
-        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.writeHead(200, {'Content-Type': 'text/html'});
     } else {
-        res.writeHead(200, { 'Content-Type': getContentType(req.url) });
+        res.writeHead(200, {'Content-Type': getContentType(req.url)});
     }
 };
 
