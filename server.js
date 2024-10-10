@@ -58,6 +58,18 @@ const getContentType = (url) => {
             return 'application/javascript';
         case '.css':
             return 'text/css';
+        case '.png':
+            return 'image/png';
+        case '.jpg':
+            return 'image/jpeg';
+        case '.svg':
+            return 'image/svg+xml';
+        case '.json':
+            return 'application/json';
+        case '.ico':
+            return 'image/x-icon';
+        case '.txt':
+            return 'text/plain';
         default:
             return 'application/octet-stream';
     }
