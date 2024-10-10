@@ -11,7 +11,14 @@ const getPath = (url) => {
     if (/.(js|css|png|jpg|svg|json|ico|txt|map|woff|woff2|eot)$/.test(url)) {
         return path.join(__dirname, `/front${url}`)
     }
-    return path.join(__dirname, '/front/index.html');
+    return path.join(__dirname, '/front/index.html')
+};
+const getType = (url) => {
+    // 请求静态资源时，路径直接拼接；否则发送index.html
+    if (/.(js|css|png|jpg|svg|json|ico|txt|map|woff|woff2|eot)$/.test(url)) {
+        return "file"
+    }
+    return "page"
 };
 
 const server = http.createServer((req, res) => {
@@ -38,7 +45,7 @@ const getReadFileOptions = (url) => {
 };
 
 const setResponseHeaders = (req, res) => {
-    if (req.url === "/") {
+    if (getType(req.url) === "page") {
         res.writeHead(200, {'Content-Type': 'text/html'});
     } else {
         res.writeHead(200, {'Content-Type': getContentType(req.url)});
